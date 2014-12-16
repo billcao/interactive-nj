@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<html ng-app="njApp">
+  <head>
+    <title>Neighbor-joining</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="js/lib/jquery/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body ng-controller="NjTreeCtrl">
+    <h1>Interactive Neighbor-joining algorithm</h1>
+    <div class="col-lg-5 col-md-5">
+      <nj-tree tree-data="data"></nj-tree>
+      
+    </div>
+
+    <div id="info" class="col-lg-3 col-md-3">
+      <p>Step #{{ step }}</p>
+      <i ng-click="reset()" class="glyphicon glyphicon-fast-backward"></i>
+      <i ng-click="previousStep()" ng-hide="hideBackward" class="glyphicon glyphicon-backward"></i>
+      <i ng-show="hideBackward" class="glyphicon glyphicon-none"></i>
+      <i ng-click="nextStep()" ng-hide="hideForward" class="glyphicon glyphicon-forward"></i>
+      <i ng-show="hideForward" class="glyphicon glyphicon-none"></i>
+      <i ng-click="finalStep()" ng-show="done" class="glyphicon glyphicon-fast-forward"></i>
+      <br>
+      <br>
+      <p>{{ msgSteps[step] }}</p>
+      <!-- <p>{{ dSteps[step] }}</p> -->
+      <strong>D Matrix</strong>
+      <table class="wikitable">
+        <tr>
+          <th style="width: 50px;"></th>
+          <th style="width: 50px;" ng-repeat="(key, value) in dSteps[step]"> {{ key }} </th>
+        </tr>
+        <tr ng-repeat="(key, value) in dSteps[step]">
+          <th>{{ key }}</th>
+          <td ng-repeat="(k, v) in dSteps[step][key]">{{ v }}</td>
+        </tr>
+      </table>
+      <!-- <p>{{ qSteps[step] }}</p> -->
+      <strong>Q Matrix</strong>
+      <table class="wikitable">
+        <tr>
+          <th style="width: 50px;"></th>
+          <th style="width: 50px;" ng-repeat="(key, value) in qSteps[step]"> {{ key }} </th>
+        </tr>
+        <tr ng-repeat="(key, value) in qSteps[step]">
+          <th>{{ key }}</th>
+          <td ng-repeat="(k, v) in qSteps[step][key]">{{ v }}</td>
+        </tr>
+      </table>
+      <h2>Neighbor-joining Algorithm (from Wikipedia):</h2>
+      <ol>
+        <li>Calculate the <strong>Q</strong> matrix for the <img class="mwe-math-fallback-image-inline tex" alt="n" src="//upload.wikimedia.org/math/7/b/8/7b8b965ad4bca0e41ab51de7b31363a1.png"> taxa from the distance matrix <strong>D</strong> using <img class="mwe-math-fallback-image-inline tex" alt="Q(i,j)=(n-2)d(i,j)-\sum_{k=1}^n d(i,k) - \sum_{k=1}^n d(j,k)" src="//upload.wikimedia.org/math/e/6/4/e64fea0c91de5ac6e28c43ec617b2601.png"> where <img class="mwe-math-fallback-image-inline tex" alt="d(i,j)" src="//upload.wikimedia.org/math/2/9/e/29eb38de1ea5fee2d669d4bb4eab405d.png"> is the distance between taxa <img class="mwe-math-fallback-image-inline tex" alt="i" src="//upload.wikimedia.org/math/8/6/5/865c0c0b4ab0e063e5caa3387c1a8741.png"> and <img class="mwe-math-fallback-image-inline tex" alt="j" src="//upload.wikimedia.org/math/3/6/3/363b122c528f54df4a0446b6bab05515.png">.</li>
+        <li>We find our cherry by choosing the pair of distinct taxa that has a minimum <strong>Q</strong> value (choose arbitrarily for a tie). We join this pair into a new node and connect it to the central node.</li>
+        <li>Calculate the distances from each of the joined taxa to the new node using <img class="mwe-math-fallback-image-inline tex" alt="\delta(f,u)=\frac{1}{2}d(f,g)+\frac{1}{2(n-2)} \left [ \sum_{k=1}^n d(f,k) - \sum_{k=1}^n d(g,k) \right ] \quad " src="//upload.wikimedia.org/math/7/9/7/797b52105c30ec0c6455867d6d465cf3.png"> and <img class="mwe-math-fallback-image-inline tex" alt="\delta(g,u)=d(f,g)-\delta(f,u) \quad " src="//upload.wikimedia.org/math/2/3/3/23383385b55081d3cd17d023c1b94581.png"></li>
+        <li>Calculate the distances from each of the taxa to the new node using <img class="mwe-math-fallback-image-inline tex" alt="d(u,k)=\frac{1}{2} [d(f,k)+d(g,k)-d(f,g)]" src="//upload.wikimedia.org/math/f/6/0/f602a7a6d76764fa6bb3f021466d1997.png"> This is our updated <strong>D</strong> matrix.</li>
+        <li>Run the algorithm again with the updated distance matrix D.</li>
+        <li><img class="mwe-math-fallback-image-inline tex" alt="n" src="//upload.wikimedia.org/math/7/b/8/7b8b965ad4bca0e41ab51de7b31363a1.png"> taxa requires <img class="mwe-math-fallback-image-inline tex" alt="n-3" src="//upload.wikimedia.org/math/3/c/4/3c49542d877de0b38803264f46a066ab.png"> iterations of the algorithm. Computational complexity is <img class="mwe-math-fallback-image-inline tex" alt="O(n^3)" src="//upload.wikimedia.org/math/6/8/0/6809c59370e21b3e6e8fd117442fd377.png"></li>
+      </ol>
+    </div>
+
+    <div class="col-lg-5 cold-md-5">
+      <h3>Resources and References</h3>
+      <ul>
+        <li><a href="https://en.wikipedia.org/wiki/Neighbor_joining">Neighbor-joining (Wikipedia)</a></li>
+        <li><a href="http://mbe.oxfordjournals.org/content/4/4/406.full.pdf">The Neighbor-joining Method: A New Method for Reconstructing Phylogenetic Trees, Saitou and Nei (1987)</a></li>
+        <li><a href="http://mbe.oxfordjournals.org/content/5/6/729.full.pdf">A Note on the Neighbor-Joining Algorithm, Studier and Keppler (1988)</a></li>
+      </ul>
+    </div>
+
+    <script src="js/lib/angular/angular.min.js"></script>
+    <script src="js/app/app.js"></script>
+    <script src="js/app/controllers.js"></script>
+    <script src="js/app/directives.js"></script>
+    <script src="js/app/d3.js"></script>
+  </body>
+</html>

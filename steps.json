@@ -1,0 +1,94 @@
+// Step 0
+{
+    "name": "",
+    "children": [{
+        "name": "a"
+    }, {
+        "name": "b"
+    }, {
+        "name": "c"
+    }, {
+        "name": "d"
+    }, {
+        "name": "e"
+    }]
+}
+// Step 1
+{
+    "name": "",
+    "children": [{
+        "name": "c"
+    }, {
+        "name": "d"
+    }, {
+        "name": "e"
+    }, {
+        "name": "a-b",
+        "children": [{
+            "name": "a",
+            "dist": 2
+        }, {
+            "name": "b",
+            "dist": 3
+        }]
+    }]
+}
+
+// Step 2
+{
+    "name": "",
+    "children": [{
+        "name": "d"
+    }, {
+        "name": "e"
+    }, {
+        "name": "c-a-b",
+        "children": [{
+            "name": "c",
+            "dist": 4
+        }, {
+            "name": "a-b",
+            "dist": 3,
+            "children": [{
+                "name": "a",
+                "dist": 2
+            }, {
+                "name": "b",
+                "dist": 3
+            }]
+        }]
+    }]
+}
+
+// Step 3 (final step)
+{
+    "name": "",
+    "children": [{
+        "name": "c-a-b",
+        "children": [{
+            "name": "c",
+            "dist": 4
+        }, {
+            "name": "a-b",
+            "dist": 3,
+            "children": [{
+                "name": "a",
+                "dist": 2
+            }, {
+                "name": "b",
+                "dist": 3
+            }]
+        }],
+        "dist": 1
+    }, {
+        "name": "d-e",
+        "children": [{
+            "name": "d",
+            "dist": 2
+        }, {
+            "name": "e",
+            "dist": 1
+        }],
+        "dist": 1
+    }]
+}

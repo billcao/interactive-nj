@@ -1,0 +1,73 @@
+h1 {
+  margin-left: 15px;
+}
+
+p {
+  font-size: 20px;
+}
+
+#info {
+  margin-left: 125px;
+}
+
+.node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.node {
+  font: 20px sans-serif;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}
+
+i.glyphicon {
+  font-size: 3.5em;
+  margin-left: 10px;
+}
+
+i.glyphicon:hover {
+  color: steelblue;
+  cursor: pointer;
+}
+
+.glyphicon-none:before {
+    content: "\2122";
+    color: transparent !important;
+}
+.glyphicon-none:hover {
+    cursor: default !important;
+}
+
+/**
+ * wikitable class for skinning normal tables
+ * keep in sync with commonPrint.css
+ * From http://en.wikipedia.org/wiki/Wikipedia:Catalogue_of_CSS_classes
+ */
+table.wikitable {
+         margin: 1em 1em 1em 0;
+         background-color: #f9f9f9;
+         border: 1px #aaa solid;
+        border-collapse: collapse;
+        color: black;
+ }
+table.wikitable > tr > th,
+table.wikitable > tr > td,
+table.wikitable > * > tr > th,
+table.wikitable > * > tr > td {
+        border: 1px #aaa solid;
+        padding: 0.2em;
+}
+table.wikitable > tr > th,
+table.wikitable > * > tr > th {
+         background-color: #f2f2f2;
+         text-align: center;
+ }
+ table.wikitable > caption {
+         font-weight: bold;
+ }
